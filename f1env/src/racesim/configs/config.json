@@ -1,0 +1,84 @@
+{
+    "n_drivers": 20,
+    "driver_to_control": 19,
+    "max_laps": 100,
+    "circuits":
+    [
+        { 
+            "name": "Monaco",
+            "parameters": 
+            {
+                "n_laps": 78,
+                "start_interval": 0.4,
+                "overtake_chance": 0.15,
+                "base_time": 70,
+                "pit":
+                {
+                    "pit_entry": 0.98,
+                    "pit_exit": 0.02,
+                    "pitstop_time": 24,
+                    "n_tyres": 3,
+                    "max_stops": 5
+                },
+                "fuel": {
+                    "mass_effect": 0.07,
+                    "consumption_per_lap_inKg": 1.282
+                },
+                "tyre_types": {
+                    "soft": {"id": 0, "added_time": 0,
+                                "squared_deg": 0.0028,"linear_deg": -0.020,
+                                "perf_var": 0.020, "deg_var": 0.00005},
+                    "medium": {"id": 1, "added_time": 0.5,
+                                "squared_deg": 0.0020,"linear_deg": -0.018,
+                                "perf_var": 0.015, "deg_var": 0.00005},
+                    "hard": {"id":2, "added_time": 1.1,
+                                "squared_deg": 0.0016,"linear_deg": -0.014,
+                                "perf_var": 0.010, "deg_var": 0.00005}
+                }
+            },
+            "strategies":[
+                {
+                    "name": "soft-hard",
+                    "start_tyre": "soft",
+                    "pitStops": [
+                        {"lap_number": 32, "tyre": "hard", "lap_var": 2}
+                    ],
+                    "probability": 0.6
+                },
+                {
+                    "name": "soft-medium",
+                    "start_tyre": "soft",
+                    "pitStops": [
+                        {"lap_number": 37, "tyre": "medium", "lap_var": 2}
+                    ],
+                    "probability": 0.05
+                },
+                {
+                    "name": "medium-soft",
+                    "start_tyre": "medium",
+                    "pitStops": [
+                        {"lap_number": 45, "tyre": "soft", "lap_var": 2}
+                    ],
+                    "probability": 0.05
+                },
+                {
+                    "name": "medium-hard",
+                    "start_tyre": "medium",
+                    "pitStops": [
+                        {"lap_number": 38, "tyre": "hard", "lap_var": 2}
+                    ],
+                    "probability": 0.20
+                },
+                {
+                    "name": "hard-soft",
+                    "start_tyre": "hard",
+                    "pitStops": [
+                        {"lap_number": 61, "tyre": "soft", "lap_var": 2}
+                    ],
+                    "probability": 0.10
+                }
+                
+            ]
+        }
+    ]
+}
