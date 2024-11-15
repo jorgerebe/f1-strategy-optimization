@@ -116,7 +116,7 @@ Each model was evaluated across 1,000 unique race simulations. These races had d
     <td colspan="2">11.267 ± 5.8142</td>
     <td colspan="2">11.904 ± 4.4028</td>
     <td colspan="3">11.645 ± 5.6116</td>
-    <td>11.266 ± 4.8718</td>
+    <td>11.267 ± 4.8727</td>
   </tr>
   <tr>
     <td><b>QR-DQN</b></td>
