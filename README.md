@@ -91,7 +91,7 @@ Experiments using this reward function will be with races where driver controlle
 
 ## Evaluation and Best Model Selection
 
-Each model was evaluated across 1,000 unique race simulations. These races had different configurations, including randomized starting grids and varied strategies for the competing drivers. Ro ensure a fair comparison, each model evaluation used the same set of 1,000 races. This approach allowed consistent starting conditions across different algorithms and reward functions, enabling a direct comparison of performance.
+Each model was evaluated across 1,000 unique race simulations. These races had different configurations, including randomized starting grids and varied strategies for the competing drivers. To ensure a fair comparison, each model evaluation used the same intial conditions for all the 1,000 races. This approach allowed consistent starting conditions across different algorithms and reward functions, enabling a direct comparison of performance.
 
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
