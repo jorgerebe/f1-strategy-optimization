@@ -47,7 +47,7 @@ $$A = \{0, 1, 2, 3\}$$
 
 #### Time Simulation $[t \geq 0 \land t < n\\_laps - 1, a \in A]$
 
-* Lap time  effect: Tyres and Fuel
+* ***Lap time  effect: Tyres and Fuel***
 
   Time of each driver is calculated using two variables: performance of current fitted set of tyres and mass effect of the remaining fuel.
 
@@ -59,33 +59,34 @@ $$A = \{0, 1, 2, 3\}$$
 n.t\_min = ci.t\_base + n.compound.t\_add
 ```
 
-Taken into account the degradation of the tyres, the effect on the tyres on the lap time is defined as follows:
+  Taken into account the degradation of the tyres, the effect on the tyres on the lap time is defined as follows:
 
 ```math
 n.tyres\_effect = n.t\_min + n.compound.degradation(n.used\_laps)
 ```
 
-* Fuel effect
 
-  Let $f$ be the fuel of a car during a race. Consumed fuel is defined as:
+  * Fuel effect
+
+    Let $f$ be the fuel of a car during a race. Consumed fuel is defined as:
 
 ```math
 f.consumed\_fuel = (f.consumption\_per\_lap \cdot f.consumed\_laps)
 ```
 
-Remaining fuel as:
+  Remaining fuel as:
 
 ```math
 f.remaining\_fuel = f.initial\_mass - f.consumed\_fuel
 ```
 
-Therefore, the effect on the lap time by the fuel mass effect is:
+  Therefore, the effect on the lap time by the fuel mass effect is:
 
 ```math
 f.fuel\_effect = f.remaining\_fuel \cdot f.mass\_effect
 ```
 
-* Potential lap time
+* ***Potential lap time***
   
   Let $p$ be a driver, its lap time, if she is in clean air, that is, her potential lap time $(plt)$ as:
 
@@ -93,7 +94,7 @@ f.fuel\_effect = f.remaining\_fuel \cdot f.mass\_effect
 p.plt = n.tyres\_effect + f.fuel\_effect
 ```
 
-* Time Simulation
+* ***Time Simulation***
 
   Given state $S_t$ and action $A_t$, simulator advances to state $S_{t+1}$ by simulating the time needed for a event related to any of the drivers to happen. This event could be: **1)** get to the pit lane entry, **2)** get to the pit exit if the driver had pitted and **3)** get to the finish lane if she is on the last lap. If a driver $p$ has finished the racer $(p.ltg = 0)$, $p$ will have no more events, so the needed time for an event related to him to happen will be $\inf$.
 
@@ -115,16 +116,29 @@ Therefore, the minimum time to simulate will be:
 time\_{to\_simulate} = \min_{p \in drivers} p.time\_until\_event(p)
 ```
 
-* Percentage to advance
+* ***Percentage to advance***
 
-  Once
+  Once $plt$ for a driver $p$ and $time\\_to\\_simulate$ is known, supossing $p$ is in clean air, the percentage of lap that $p$ is going to advance in that time can be calculated. Let $percentage\\_to\\_advance$ be defined as:
 
-* Overtakes
+```math
+p.percentage\_to\_advance = \frac{time\_to\_simulate}{p.plt}
+```
 
-  overtakes
+* ***Overtakes***
 
+  If during the minimum time to simulate, a driver is expected to advance more than the driver she has in front, and is enough to overtake her, then she will overtake her with a certain probability $p\\_overtake$, depending on the track.
 
-#### Pseudocode
+  Let $x$ a random number in the range $[0, 1)$, $c$ a track where race is happening, $p_1$ a driver, and $p_2$ a driver behind $p_1$, $time\\_until\\_next$ the needed time for $p_2$ to catch $p_1$, being $time\\_until\\_next < time\\_to\\_simulate$, then $p\_2.percentage\\_to\\_advance$ is redefined:
+
+```math
+p_2.percentage\_to\_advance =
+    \begin{cases}
+        \frac{time\_to\_simulate}{p_2.plt},              & \text{if } x < c.p\_overtake\\
+        \frac{time\_until\_next - d\_no\_ov}{p_2.plt},              & \text{otherwise}
+    \end{cases}
+```
+
+This means, with probability $c.p\_overtake$, $p_2$ will overtake $p_1$, and with probability $1 - c.p\_overtake$, 
 
 #### Variability
 
@@ -175,7 +189,7 @@ Experiments using this reward function will be with races where driver controlle
 
 Reward function R3 will give a reward to the agent only when the race is finished, based on its finishing position. This way, agent can be trained in more realistic conditions (grid with random order).
 
-From the first position to the last, a reward has been assigned to each position, which will be given to the agent at the end of the race based on its finishing position. The function r3_aux(p) is defined as a function that takes a position as input and returns the associated reward, as shown in the following table:
+From the first position to the last, a reward has been assigned to each position, which will be given to the agent at the end of the race based on its finishing position. The function $r3\\_aux(p)$ is defined as a function that takes a position as input and returns the associated reward, as shown in the following table:
 
 <table>
   <tr>
