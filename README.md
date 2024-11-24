@@ -6,9 +6,50 @@ strategies used in past Grand Prixes.
 
 ## Overview
 
-## Simulator Configuration
+
+
+
+## F1 Races Simulator 
+
+The agent needs to interact with an environment in order to learn to optimise the race strategy for a driver. That environment is a discretised F1 races simulator, built with Python. In a race there are be *n\_laps* laps and _T_ timesteps, numbered from 0 to *n_laps - 1*.  
+
+### State
+
+- Initial State [ _t = 0_ ]
+
+  At the start of the simulation, the race begins, and the initial state t = 0 is the moment when the agent-controlled driver approaches the pit entry, where the first action must be taken.
+
+- Intermediate States [ _t > 0 and t < n_laps - 1_ ]
+
+  Intermediate states are from the second lap (_t = 1_) until the penultimate lap (_t = n_vueltas-2_), the last timestep where the driver can stop, as it would not make sense to pit in the last lap.
+
+- Terminal State: [ _t = n_laps - 1 = T_ ]
+
+  Simulator is in the terminal state when race is finished, the number of laps to go for every driver is 0.
+
+### Actions
+
+There are 4 possible actions that the agent can take in each timestep of the simulation:
+
+- 0: No stop.
+- 1: Box for a new set of soft tyres.
+- 2: Box for a new set of medium tyres.
+- 3: Box for a new set of hard tyres.
+
+Therefore, _A_ is defined as the set of possible actions:
+
+```math
+$$A = \{0, 1, 2, 3\}$$
+```
+
+
+### Simulator Functionality
+
 
 ## Experimental Setup
+
+### Simulator Configuration
+
 
 ### Algorithms
 
