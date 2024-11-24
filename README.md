@@ -95,6 +95,10 @@ p.plt = n.tyres\_effect + f.fuel\_effect
 
 * Time Simulation
 
+  Given state $S_t$ and action $A_t$, simulator advances to state $S_{t+1}$ by simulating the time needed for a event related to any of the drivers to happen. This event could be: **1)** get to the pit lane entry, **2)** get to the pit exit if the driver had pitted and **3)** get to the finish lane if she is on the last lap. If a driver $p$ has finished the racer $(p.ltg = 0)$, $p$ will have no more events, so the needed time for an event related to him to happen will be $\inf$.
+
+  Let $p$ be a driver, the time needed for an event related to him to happen is defined as:
+
 ```math
 time\_until\_event(p)=
     \begin{cases}
@@ -104,6 +108,20 @@ time\_until\_event(p)=
         p.time\_until\_pit\_entry,              & \text{otherwise}
     \end{cases}
 ```
+
+Therefore, the minimum time to simulate will be:
+
+```math
+time\_{to\_simulate} = \min_{p \in drivers} p.time\_until\_event(p)
+```
+
+* Percentage to advance
+
+  Once
+
+* Overtakes
+
+  overtakes
 
 
 #### Pseudocode
