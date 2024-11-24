@@ -45,6 +45,70 @@ $$A = \{0, 1, 2, 3\}$$
 
 ### Simulator Functionality
 
+#### Time Simulation $[t \geq 0 \land t < n\\_laps - 1, a \in A]$
+
+* Lap time  effect: Tyres and Fuel
+
+  Time of each driver is calculated using two variables: performance of current fitted set of tyres and mass effect of the remaining fuel.
+
+  * Tyres effect
+ 
+    Let $ci$ be the track where a driver is racing, $t$ a tyre set that a driver has fitted in her car, $ci.t\\_base$ the base time needed for a lap at the track $ci$, $n.t\\_min$ is defined as the effect on the lap time a new tyre set has:
+
+```math
+n.t\_min = ci.t\_base + n.compound.t\_add
+```
+
+Taken into account the degradation of the tyres, the effect on the tyres on the lap time is defined as follows:
+
+```math
+n.tyres\_effect = n.t\_min + n.compound.degradation(n.used\_laps)
+```
+
+* Fuel effect
+
+  Let $f$ be the fuel of a car during a race. Consumed fuel is defined as:
+
+```math
+f.consumed\_fuel = (f.consumption\_per\_lap \cdot f.consumed\_laps)
+```
+
+Remaining fuel as:
+
+```math
+f.remaining\_fuel = f.initial\_mass - f.consumed\_fuel
+```
+
+Therefore, the effect on the lap time by the fuel mass effect is:
+
+```math
+f.fuel\_effect = f.remaining\_fuel \cdot f.mass\_effect
+```
+
+* Potential lap time
+  
+  Let $p$ be a driver, its lap time, if she is in clean air, that is, her potential lap time $(plt)$ as:
+
+```math
+p.plt = n.tyres\_effect + f.fuel\_effect
+```
+
+* Time Simulation
+
+```math
+time\_until\_event(p)=
+    \begin{cases}
+        \infty ,& \text{if } p.ltg = 0\\
+        p.time\_until\_finish\_lane,              & \text{if } p.ltg = n\_laps\\
+        p.time\_until\_pit\_exit,              & \text{if } p.in\_pits\\
+        p.time\_until\_pit\_entry,              & \text{otherwise}
+    \end{cases}
+```
+
+
+#### Pseudocode
+
+#### Variability
 
 ## Experimental Setup
 
