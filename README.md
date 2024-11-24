@@ -1,8 +1,8 @@
 # F1 Race Strategy Optimization with Deep Reinforcement Learning
 
 This project consists of a reinforcement learning agent that optimises race strategy decisions, improving average finish position by 3.2 places in 1000 simulated races compared to results
-using real-world past strategies. In order to train the agent, a F1 race simulator has been built in Python. The agent learned by interacting in races with other drivers that used real
-strategies used in past Grand Prixes.
+using real-world past strategies. In order to train the agent, an F1 race simulator has been built in Python. The agent learned by interacting in races with other drivers that used real
+strategies used in past Grands Prix.
 
 ## Overview
 
@@ -11,7 +11,7 @@ strategies used in past Grand Prixes.
 
 ## F1 Races Simulator 
 
-The agent needs to interact with an environment in order to learn to optimise the race strategy for a driver. That environment is a discretised F1 races simulator, built with Python. In a race there are be *n\_laps* laps and _T_ timesteps, numbered from 0 to *n_laps - 1*.  
+The agent needs to interact with an environment in order to learn to optimise the race strategy for a driver. That environment is a discretised F1 races simulator, built with Python. In a race, there are be *n\_laps* laps and _T_ timesteps, numbered from 0 to *n_laps - 1*.  
 
 ### State
 
@@ -21,7 +21,7 @@ The agent needs to interact with an environment in order to learn to optimise th
 
 - Intermediate States [ _t > 0 and t < n_laps - 1_ ]
 
-  Intermediate states are from the second lap (_t = 1_) until the penultimate lap (_t = n_vueltas-2_), the last timestep where the driver can stop, as it would not make sense to pit in the last lap.
+  Intermediate states are from the second lap (_t = 1_) until the penultimate lap (_t = n_laps-2_), the last timestep where the driver can stop, as it would not make sense to pit in the last lap.
 
 - Terminal State: [ _t = n_laps - 1 = T_ ]
 
@@ -57,7 +57,7 @@ $$A = \{0, 1, 2, 3\}$$
     
   <p align="center">$$n.t\_min = ci.t\_base + n.compound.t\_add$$</p>
 
-   Taken into account the degradation of the tyres, the effect on the tyres on the lap time is defined as follows:
+   Taken into account the degradation of the tyres, the effect of the tyres on the lap time is defined as follows:
    
   <p align="center">$$n.tyres\_effect = n.t\_min + n.compound.degradation \cdot (n.used\_laps)$$</p>
   
@@ -107,7 +107,7 @@ time\_{to\_simulate} = \min_{p \in drivers} p.time\_until\_event(p)
 
 * ***Percentage to advance***
 
-  Once $plt$ for a driver $p$ and $time\\_to\\_simulate$ is known, supossing $p$ is in clean air, the percentage of lap that $p$ is going to advance in that time can be calculated. Let $percentage\\_to\\_advance$ be defined as:
+  Once $plt$ for a driver $p$ and $time\\_to\\_simulate$ is known, supposing $p$ is in clean air, the percentage of lap that $p$ is going to advance in that time can be calculated. Let $percentage\\_to\\_advance$ be defined as:
 
 ```math
 p.percentage\_to\_advance = \frac{time\_to\_simulate}{p.plt}
@@ -150,13 +150,13 @@ Three algorithms have been used for the experiments:
 
 ### Reward Functions
 
-The reward function is a critical element in a reinforcement learning system. Is the only signal that the agent can use to know how well it is performing, so it is critical to design a good reward function and consider a couple of them and see what is the one with which better results are achieved.
+The reward function is a critical element in a reinforcement learning system. Is the only signal the agent can use to know how well it is performing, so it is critical to design a good reward function and consider a couple of them and see what is the one with which better results are achieved.
 
 #### Common elements to all the reward functions
 
 In order to comply with the simulator restrictions, a negative reward will be given to the agent every time it takes a decision that is not in conformity with any of them:
 
-- If at the end of the race the driver has not used two different tyre compounds, then it will receive a negative reward of -1, appart from being disqualified from the race.
+- If at the end of the race the driver has not used two different tyre compounds, then it will receive a negative reward of -1, apart from being disqualified from the race.
 - If the agent stops more than the maximum number of allowed stops, it means that it is trying to stop when no more tyres are available, which will result in an additional reward of -1 every time it pits when the limit has been surpassed.
 
 #### R1 - Positions gained per lap
@@ -184,7 +184,7 @@ Reward function R3 will give a reward to the agent only when the race is finishe
 
 From the first position to the last, a reward has been assigned to each position, which will be given to the agent at the end of the race based on its finishing position. The function $r3\\_aux(p)$ is defined as a function that takes a position as input and returns the associated reward, as shown in the following table:
 
-<table>
+<table align=center>
   <tr>
     <th style="background-color:#ECF4FF;">Position</th>
     <th style="background-color:#FFFFC7;">Reward</th>
@@ -221,9 +221,9 @@ Experiments using this reward function will be with races where driver controlle
 
 ## Evaluation and Best Model Selection
 
-Each model was evaluated across 1,000 unique race simulations. These races had different configurations, including randomized starting grids and varied strategies for the competing drivers. To ensure a fair comparison, each model evaluation used the same intial conditions for all the 1,000 races. This approach allowed consistent starting conditions across different algorithms and reward functions, enabling a direct comparison of performance.
+Each model was evaluated across 1,000 unique race simulations. These races had different configurations, including randomized starting grids and varied strategies for the competing drivers. To ensure a fair comparison, each model evaluation used the same initial conditions for all the 1,000 races. This approach allowed consistent starting conditions across different algorithms and reward functions, enabling a direct comparison of performance.
 
-<table border="1" cellspacing="0" cellpadding="5">
+<table border="1" cellspacing="0" cellpadding="5" align=center>
   <tr>
     <th rowspan="3"></th>
     <th colspan="8">Reward Function</th>
