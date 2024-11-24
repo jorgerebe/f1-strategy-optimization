@@ -128,7 +128,7 @@ p.percentage\_to\_advance = \frac{time\_to\_simulate}{p.plt}
 
   If during the minimum time to simulate, a driver is expected to advance more than the driver she has in front, and is enough to overtake her, then she will overtake her with a certain probability $p\\_overtake$, depending on the track.
 
-  Let $x$ a random number in the range $[0, 1)$, $c$ a track where race is happening, $p_1$ a driver, and $p_2$ a driver behind $p_1$, $time\\_until\\_next$ the needed time for $p_2$ to catch $p_1$, being $time\\_until\\_next < time\\_to\\_simulate$, then $p\_2.percentage\\_to\\_advance$ is redefined:
+  Let $x$ a random number in the range $[0, 1)$, $c$ a track where race is happening, $p_1$ a driver, and $p_2$ a driver behind $p_1$, $time\\_until\\_next$ the needed time for $p_2$ to catch $p_1$, being $time\\_until\\_next \lt time\\_to\\_simulate$, then $p\_2.percentage\\_to\\_advance$ is redefined:
 
 ```math
 p_2.percentage\_to\_advance =
@@ -138,9 +138,13 @@ p_2.percentage\_to\_advance =
     \end{cases}
 ```
 
-This means, with probability $c.p\_overtake$, $p_2$ will overtake $p_1$, and with probability $1 - c.p\_overtake$, 
+This means, with probability $c.p\\_overtake$, $p_2$ will overtake $p_1$, and with probability $1 - c.p\\_overtake$, $p_2$ will stay $d\\_no\\_ov$ seconds behind $p_1$.
 
 #### Variability
+
+Every moment in an F1 race is different, so tyres performance and degradation will be different for each tyre set of the same compound.
+
+Every driver that is not being controlled will use a predefined strategy estimated from real races, but will not always be the same, but there will be variability in the lap number for each pitstop. Furthermore, each predefined strategy will have a probability of being assigned to a driver. The start tyre of the driver being controlled will come from a predefined strategy, with the same probability as for the rest of the drivers.
 
 ## Experimental Setup
 
