@@ -221,7 +221,30 @@ Experiments using this reward function will be with races where driver controlle
 
 ## Evaluation and Best Model Selection
 
-Each model was evaluated across 1,000 unique race simulations. These races had different configurations, including randomized starting grids and varied strategies for the competing drivers. To ensure a fair comparison, each model evaluation used the same initial conditions for all the 1,000 races. This approach allowed consistent starting conditions across different algorithms and reward functions, enabling a direct comparison of performance.
+Evaluation consists of, for each experiment, race in a set of **1,000 unique race simulations**. Each race in the set starts with a different configuration, including a randomized starting grid and varied strategies for the drivers competing in it. To ensure a fair comparison, each evaluation will be against the same set of unique initial conditions across all 1,000 races. This approach allows consistent starting conditions in the races that compose the evaluation, enabling a direct comparison of performance.
+
+The evaluation metric will be the average finishing position in the race and its standard deviation across all 1,000 races. A lower value of this metric indicates a better-performing model.
+
+### Baseline Evaluation
+
+In the following table you can see the results for the baseline evaluation, that will be used to compare the results of the trained model. There are three baseline cases: **1)** the driver stops between 1 and 3 times in any moment of the race; **2)** the driver stops between 1 and 3 times between the first third and second third of the race (it avoids worst case stops at the very beginning or the very end of the race); and **3)** the driver uses real-world past strategies, as the rest of the drivers competing in the race.
+
+<table border="1" align=center>
+  <tr>
+    <th>Between 1 and 3 stops<br>in any lap</th>
+    <th>Between 1 and 3 stops<br>between first and second<br>third of the race</th>
+    <th>Previous real-world strategies<br>(as the rest of drivers)</th>
+  </tr>
+  <tr>
+    <td>$16.219 \pm 4.6416$</td>
+    <td>$13.559 \pm 4.61459$</td>
+    <td>$10.488 \pm 5.120$</td>
+  </tr>
+</table>
+
+### Trained Agents Evaluation
+
+For each experiment run, the best model has been taken and evaluated. Evaluation results of the model from the best run obtained of each experiment are shown in the next table.
 
 <table border="1" cellspacing="0" cellpadding="5" align=center>
   <tr>
@@ -264,8 +287,13 @@ Each model was evaluated across 1,000 unique race simulations. These races had d
   </tr>
 </table>
 
+Models trained with the algorithm A2C clearly have got the best results, compared with DQN and QR-DQN, regardless of the reward function used. Looking at the reward functions, R2 has a worse average finishing position than R1 for all three algorithms. R3 is better than R2 for algorithm A2C, but DQN and QR-DQN are not able to get good results with that reward function.
 
+Regarding algorithms, DQN is only able to get better results than baseline cases 1) and 2) (that simulate random agents), but does not reach the level of performance of the agent that uses real-world strategies from past years (base line 3)). QR-DQN only has better average finishing position than DQN for reward functions R1 and R2, but with a worse standard deviation. However, for R3, its performance decreases.
 
+**A2C improves for every reward function the agent that uses real-world strategies**. In particular, its performance is excellent for reward function R3, and the best model is the one that was trained in race simulations with a randomized starting grid.
+
+As the environment is stochastic, **A2C is expected to outperform DQN and QR-DQN**, as _policy gradient methods_ are well-suited for such environments, and the obtained results confirm this.
 
 ## Conclusions and Future Work
 
