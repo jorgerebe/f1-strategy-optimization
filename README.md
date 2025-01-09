@@ -1,17 +1,12 @@
 # F1 Race Strategy Optimization with Deep Reinforcement Learning
 
-This project consists of a reinforcement learning agent that optimises race strategy decisions, improving average finish position by 3.2 places in 1000 simulated races compared to results
+This project consists of a reinforcement learning agent that optimizes race strategy decisions, improving average finish position by 3.2 places in 1000 simulated races compared to results
 using real-world past strategies. In order to train the agent, an F1 race simulator has been built in Python. The agent learned by interacting in races with other drivers that used real
 strategies used in past Grands Prix.
 
-## Overview
-
-
-
-
 ## F1 Races Simulator 
 
-The agent needs to interact with an environment in order to learn to optimise the race strategy for a driver. That environment is a discretised F1 races simulator, built with Python. In a race, there are be *n\_laps* laps and _T_ timesteps, numbered from 0 to *n_laps - 1*.  
+The agent needs to interact with an environment in order to learn to optimize the race strategy for a driver. That environment is a discretised F1 races simulator, built with Python. In a race, there are *n\_laps* laps and _T_ timesteps, numbered from 0 to *n_laps - 1*.  
 
 ### State
 
@@ -85,7 +80,7 @@ p.plt = n.tyres\_effect + f.fuel\_effect
 
 * ***Time Simulation***
 
-  Given state $S_t$ and action $A_t$, simulator advances to state $S_{t+1}$ by simulating the time needed for a event related to any of the drivers to happen. This event could be: **1)** get to the pit lane entry, **2)** get to the pit exit if the driver had pitted and **3)** get to the finish lane if she is on the last lap. If a driver $p$ has finished the racer $(p.ltg = 0)$, $p$ will have no more events, so the needed time for an event related to him to happen will be $\inf$.
+  Given state $S_t$ and action $A_t$, simulator advances to state $S_{t+1}$ by simulating the time needed for a event related to any of the drivers to happen. This event could be: **1)** get to the pit lane entry, **2)** get to the pit exit if the driver had pitted and **3)** get to the finish lane if she is on the last lap. If a driver $p$ has finished the race $(p.ltg = 0)$, $p$ will have no more events, so the needed time for an event related to him to happen will be $\inf$.
 
   Let $p$ be a driver, the time needed for an event related to him to happen is defined as:
 
@@ -115,7 +110,7 @@ p.percentage\_to\_advance = \frac{time\_to\_simulate}{p.plt}
 
 * ***Overtakes***
 
-  If during the minimum time to simulate, a driver is expected to advance more than the driver she has in front, and is enough to overtake her, then she will overtake her with a certain probability $p\\_overtake$, depending on the track.
+  If during the minimum time to simulate, a driver is expected to advance more than the driver she has in front and if it is enough to overtake her, then she will overtake her with a certain probability $p\\_overtake$, depending on the track.
 
   Let $x$ a random number in the range $[0, 1)$, $c$ a track where race is happening, $p_1$ a driver, and $p_2$ a driver behind $p_1$, $time\\_until\\_next$ the needed time for $p_2$ to catch $p_1$, being $time\\_until\\_next \lt time\\_to\\_simulate$, then $p\_2.percentage\\_to\\_advance$ is redefined:
 
@@ -150,7 +145,7 @@ Three algorithms have been used for the experiments:
 
 ### Reward Functions
 
-The reward function is a critical element in a reinforcement learning system. Is the only signal the agent can use to know how well it is performing, so it is critical to design a good reward function and consider a couple of them and see what is the one with which better results are achieved.
+The reward function is a critical element in a reinforcement learning system. It is the only signal the agent can use to know how well it is performing, so it is critical to design a good reward function and consider a couple of them and see what is the one with which better results are achieved.
 
 #### Common elements to all the reward functions
 
@@ -294,10 +289,4 @@ Regarding algorithms, DQN is only able to get better results than baseline cases
 **A2C improves for every reward function the agent that uses real-world strategies**. In particular, its performance is excellent for reward function R3, and the best model is the one that was trained in race simulations with a randomized starting grid.
 
 As the environment is stochastic, **A2C is expected to outperform DQN and QR-DQN**, as _policy gradient methods_ are well-suited for such environments, and the obtained results confirm this.
-
-## Conclusions and Future Work
-
-### Conclusions
-
-### Future Work
 
